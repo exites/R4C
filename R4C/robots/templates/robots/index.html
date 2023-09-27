@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Excel Summary</title>
+</head>
+<body>
+    <button onclick="generateExcelSummary()">Generate Excel Summary</button>
+
+    <script>
+        function generateExcelSummary() {
+            fetch('/robots/generate_excel_summary/', {
+                method: 'GET'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'summary.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error('There has been a problem with your fetch operation:', error));
+        }
+    </script>
+</body>
+</html>
