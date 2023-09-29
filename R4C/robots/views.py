@@ -23,7 +23,7 @@ class RobotAPIView(View):
                 return JsonResponse({'error': 'Invalid model.'}, status=400)
 
 
-            # Проверка на валидность данных
+            # Проверка на валидность
             if len(serial) > 5 or len(model) > 2 or len(version) > 2:
                 return JsonResponse({'error': 'Invalid data. Exceeded maximum length.'}, status=400)
 
